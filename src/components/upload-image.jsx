@@ -14,15 +14,17 @@ export default function UploadImage({ uploadImage }) {
     }
 
     const handleUpload = (e) => {
-        if (e.target.files.length > 0) {
-            readImageFile(e.target.files).then((value) => {
+        const filesList = e.target.files
+        if (filesList.length > 0) {
+            readImageFile(filesList).then((value) => {
                 uploadImage(value.map((img, index) => ({
-                    file: e.target.files[index],
-                    image: img
+                    file: filesList[index],
+                    originalImage: img,
+                    state: 'todo',
                 })))
+                e.target.value = ""
             })
         }
-
     }
 
     const readImageFile = (files) => {
